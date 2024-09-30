@@ -21,7 +21,7 @@ var chart = new Chart(ctx, {
 				{
 					label: 'BPM',
 					backgroundColor: 'transparent',
-					borderColor: "black",
+					borderColor: "red",
 					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 		]
@@ -31,11 +31,11 @@ var chart = new Chart(ctx, {
 
 function nockanda_forever(){
 	// 데이터 받기
-	var recv = window.AppInventor.getWebViewString(); // 데이터 받기 (수정 없음)
-	console.log("Received value: " + recv); // 디버깅을 위한 콘솔 출력 추가
+	var recieve = window.AppInventor.getWebViewString(); // 데이터 받기 (수정 없음)
+	console.log("Received value: " + recieve); // 디버깅을 위한 콘솔 출력 추가
 	
 	// 수신된 데이터를 숫자로 변환
-	var bpm = parseFloat(recv);
+	var bpm = parseFloat(recieve);
 	
 	// 유효한 값인지 확인 (NaN이 아닐 경우에만 업데이트)
 	if (!isNaN(bpm)) {
