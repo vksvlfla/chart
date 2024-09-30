@@ -11,6 +11,7 @@
 <canvas id="line1"></canvas>
 </div>
 
+
 <script>
 var ctx = document.getElementById('line1').getContext('2d');
 var chart = new Chart(ctx, {
@@ -30,25 +31,12 @@ var chart = new Chart(ctx, {
 });
 
 function nockanda_forever(){
-	// 데이터 받기
-	var recieve = window.AppInventor.getWebViewString(); // 데이터 받기 (수정 없음)
-	console.log("Received value: " + recieve); // 디버깅을 위한 콘솔 출력 추가
-	
-	// 수신된 데이터를 숫자로 변환
-	var bpm = parseFloat(recieve);
-	
-	// 유효한 값인지 확인 (NaN이 아닐 경우에만 업데이트)
-	if (!isNaN(bpm)) {
-		chart.data.datasets[0].data.shift();  // 기존 데이터에서 가장 오래된 값 제거
-		chart.data.datasets[0].data.push(bpm);  // 새로 받은 데이터를 추가
-		chart.update();  // 차트 업데이트
-	} else {
-		console.log("Invalid BPM value received");  // 유효하지 않은 값일 경우 콘솔 출력
-	}
+	var recieve  = window.AppInventor.getWebViewString();
+	chart.data.datasets[0].data.shift();
+	chart.data.datasets[0].data.push(recieve);
+	//chart.data.labels.shift();
+	chart.update();
 }
-
-// 1초마다 함수 호출하여 그래프 업데이트
-setInterval(nockanda_forever, 1000);
 </script>
 </body>
 </html>
