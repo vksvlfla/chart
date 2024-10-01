@@ -2,8 +2,8 @@
 <html>
 <head>
 <title>NOCKANDA EXAMPLE</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
 
 </head>
 <body>
@@ -31,17 +31,13 @@ var chart = new Chart(ctx, {
 
 function nockanda_forever(){
 	var recieve = window.AppInventor.getWebViewString();
-	var data = recieve.split(',');  // "1,bpm" 형식으로 받은 데이터를 split
-if (data[0] === "1") {
-    var bpm = parseFloat(data[1]);  // bpm 값 추출
-    if (!isNaN(bpm)) {
+	//var data = recieve.split(',');  // "1,bpm" 형식으로 받은 데이터를 split
+//if (data[0] === "1") {
+    	//var bpm = parseFloat(data[1]);  // bpm 값 추출
         chart.data.datasets[0].data.shift();
-        chart.data.datasets[0].data.push(bpm);
+        chart.data.datasets[0].data.push(recieve);
         chart.update();
-    }
-} else {
-    console.log("Finger not detected");
-}
+ }
 
 // 1초마다 그래프 업데이트
 setInterval(nockanda_forever, 1000);
