@@ -3,6 +3,8 @@
 <head>
 <title>NOCKANDA EXAMPLE</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+
 </head>
 <body>
 <div style="width:480px;">
@@ -20,32 +22,23 @@ var chart = new Chart(ctx, {
 					label: 'BPM',
 					backgroundColor: 'transparent',
 					borderColor: "black",
-					data: [0, 0, 0, 0, 0, 0, 0]  // 기준선인 70에 맞춰 초기값 0으로 설정
+					data: [0, 0, 0, 0, 0, 0, 0]
+					beginAtZero: false
 				}
 		]
 	},
-	options: {
-		scales: {
-			yAxes: [{
-				ticks: {
-					min: -50,  // y축 최소값
-					max: 50,   // y축 최대값
-					beginAtZero: false
-				}
-			}]
-		}
-	}
+	options: {}
 });
 
 function nockanda_forever(){
-	var recieve = parseFloat(window.AppInventor.getWebViewString());
-	// 70을 기준으로 상대적인 차이 계산
-	var relativeBPM = recieve - 70;
-
-	chart.data.datasets[0].data.shift();
-	chart.data.datasets[0].data.push(relativeBPM);
-	chart.update();
-}
+	var recieve = window.AppInventor.getWebViewString();
+	//var data = recieve.split(',');  // "1,bpm" 형식으로 받은 데이터를 split
+//if (data[0] === "1") {
+    	//var bpm = parseFloat(data[1]);  // bpm 값 추출
+        chart.data.datasets[0].data.shift();
+        chart.data.datasets[0].data.push(recieve);
+        chart.update();
+ }
 
 // 1초마다 그래프 업데이트
 setInterval(nockanda_forever, 1000);
