@@ -19,8 +19,8 @@ var chart = new Chart(ctx, {
 				{
 					label: 'BPM',
 					backgroundColor: 'transparent',
-					borderColor: "black",
-					data: [0, 0, 0, 0, 0, 0, 0]  // 초기값을 0으로 설정
+					borderColor: "red",
+					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 		]
 	},
@@ -28,26 +28,25 @@ var chart = new Chart(ctx, {
 		scales: {
 			yAxes: [{
 				ticks: {
-					min: 30,  // y축 최소값을 30으로 설정 (70에서 40 아래)
-					max: 110, // y축 최대값을 110으로 설정 (70에서 40 위)
+					min: 30,  // y축의 최소값 (70보다 40 아래로 설정)
+					max: 110, // y축의 최대값 (70보다 40 위로 설정)
 					stepSize: 10,  // y축 눈금 간격
 					callback: function(value, index, values) {
 						return value;  // 값 그대로 표시
 					}
+				},
+				gridLines: {
+					zeroLineColor: 'red',  // 70 기준선을 빨간색으로 표시
+					zeroLineWidth: 2       // 기준선의 두께
 				}
-			}],
-			gridLines: {
-				color: 'gray',  // 그리드 라인 색상
-				zeroLineColor: 'red',  // 기준선을 빨간색으로 설정
-				zeroLineWidth: 2  // 기준선 두께
-			}
+			}]
 		}
 	}
 });
 
 function nockanda_forever(){
-	var recieve = parseFloat(window.AppInventor.getWebViewString());
-
+	var recieve = parseFloat(window.AppInventor.getWebViewString());  // 데이터 받아오기
+	
 	chart.data.datasets[0].data.shift();
 	chart.data.datasets[0].data.push(recieve);
 	chart.update();
