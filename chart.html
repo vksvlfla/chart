@@ -3,8 +3,6 @@
 <head>
 <title>NOCKANDA EXAMPLE</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-
-
 </head>
 <body>
 <div style="width:480px;">
@@ -22,23 +20,38 @@ var chart = new Chart(ctx, {
 					label: 'BPM',
 					backgroundColor: 'transparent',
 					borderColor: "black",
-					lineTension: 0, 
-					data: [0, 0, 0, 0, 0, 0, 0]
+					data: [0, 0, 0, 0, 0, 0, 0]  // 초기값을 0으로 설정
 				}
 		]
 	},
-	options: {}
+	options: {
+		scales: {
+			yAxes: [{
+				ticks: {
+					min: 30,  // y축 최소값을 30으로 설정 (70에서 40 아래)
+					max: 110, // y축 최대값을 110으로 설정 (70에서 40 위)
+					stepSize: 10,  // y축 눈금 간격
+					callback: function(value, index, values) {
+						return value;  // 값 그대로 표시
+					}
+				}
+			}],
+			gridLines: {
+				color: 'gray',  // 그리드 라인 색상
+				zeroLineColor: 'black',  // 기준선을 빨간색으로 설정
+				zeroLineWidth: 2  // 기준선 두께
+			}
+		}
+	}
 });
 
 function nockanda_forever(){
-	var recieve = window.AppInventor.getWebViewString();
-	//var data = recieve.split(',');  // "1,bpm" 형식으로 받은 데이터를 split
-//if (data[0] === "1") {
-    	//var bpm = parseFloat(data[1]);  // bpm 값 추출
-        chart.data.datasets[0].data.shift();
-        chart.data.datasets[0].data.push(recieve);
-        chart.update();
- }
+	var recieve = parseFloat(window.AppInventor.getWebViewString());
+
+	chart.data.datasets[0].data.shift();
+	chart.data.datasets[0].data.push(recieve);
+	chart.update();
+}
 
 // 1초마다 그래프 업데이트
 setInterval(nockanda_forever, 1000);
