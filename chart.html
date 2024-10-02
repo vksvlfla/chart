@@ -20,7 +20,9 @@ var chart = new Chart(ctx, {
 					label: 'BPM',
 					backgroundColor: 'transparent',
 					borderColor: "black",
-					data: [0, 0, 0, 0, 0, 0, 0]  // 초기값을 0으로 설정
+					data: [0, 0, 0, 0, 0, 0, 0],  // 초기값을 0으로 설정
+					lineTension: 0,  // 선을 직선으로 설정
+					fill: false      // 선 아래를 채우지 않음
 				}
 		]
 	},
@@ -35,11 +37,14 @@ var chart = new Chart(ctx, {
 						return value;  // 값 그대로 표시
 					}
 				}
-			}],
-			gridLines: {
-				color: 'gray',  // 그리드 라인 색상
-				zeroLineColor: 'black',  // 기준선을 빨간색으로 설정
-				zeroLineWidth: 2  // 기준선 두께
+			}]
+		},
+		elements: {
+			line: {
+				borderWidth: 2  // 선의 두께 설정
+			},
+			point: {
+				radius: 3  // 데이터 점의 크기 설정
 			}
 		}
 	}
@@ -48,9 +53,9 @@ var chart = new Chart(ctx, {
 function nockanda_forever(){
 	var recieve = parseFloat(window.AppInventor.getWebViewString());
 
-	chart.data.datasets[0].data.shift();
-	chart.data.datasets[0].data.push(recieve);
-	chart.update();
+	chart.data.datasets[0].data.shift();  // 이전 데이터 제거
+	chart.data.datasets[0].data.push(recieve);  // 새 데이터 추가
+	chart.update();  // 그래프 업데이트
 }
 
 // 1초마다 그래프 업데이트
