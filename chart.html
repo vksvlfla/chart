@@ -20,7 +20,7 @@ var chart = new Chart(ctx, {
 					label: 'BPM',
 					backgroundColor: 'transparent',
 					borderColor: "black",
-					data: [0, 0, 0, 0, 0, 0, 0]
+					data: [0, 0, 0, 0, 0, 0, 0]  // 기준선인 70에 맞춰 초기값 0으로 설정
 				}
 		]
 	},
@@ -28,16 +28,9 @@ var chart = new Chart(ctx, {
 		scales: {
 			yAxes: [{
 				ticks: {
-					min: 30,  // y축의 최소값 (70보다 40 아래로 설정)
-					max: 110, // y축의 최대값 (70보다 40 위로 설정)
-					stepSize: 10,  // y축 눈금 간격
-					//callback: function(value, index, values) {
-						//return value;  // 값 그대로 표시
-					//}
-				},
-				gridLines: {
-					zeroLineColor: 'red',  // 70 기준선을 빨간색으로 표시
-					zeroLineWidth: 2       // 기준선의 두께
+					min: -50,  // y축 최소값
+					max: 50,   // y축 최대값
+					beginAtZero: false
 				}
 			}]
 		}
@@ -45,10 +38,12 @@ var chart = new Chart(ctx, {
 });
 
 function nockanda_forever(){
-	var recieve = parseFloat(window.AppInventor.getWebViewString());  // 데이터 받아오기
-	
+	var recieve = parseFloat(window.AppInventor.getWebViewString());
+	// 70을 기준으로 상대적인 차이 계산
+	var relativeBPM = recieve - 70;
+
 	chart.data.datasets[0].data.shift();
-	chart.data.datasets[0].data.push(recieve);
+	chart.data.datasets[0].data.push(relativeBPM);
 	chart.update();
 }
 
