@@ -19,7 +19,7 @@ var chart = new Chart(ctx, {
 				{
 					label: 'BPM',
 					backgroundColor: 'transparent',
-					borderColor: "red",
+					borderColor: "black",
 					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 		]
@@ -31,9 +31,9 @@ var chart = new Chart(ctx, {
 					min: 30,  // y축의 최소값 (70보다 40 아래로 설정)
 					max: 110, // y축의 최대값 (70보다 40 위로 설정)
 					stepSize: 10,  // y축 눈금 간격
-					callback: function(value, index, values) {
-						return value;  // 값 그대로 표시
-					}
+					//callback: function(value, index, values) {
+						//return value;  // 값 그대로 표시
+					//}
 				},
 				gridLines: {
 					zeroLineColor: 'red',  // 70 기준선을 빨간색으로 표시
